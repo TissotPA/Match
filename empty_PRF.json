@@ -4,7 +4,7 @@
   "joueuses": [
     {
       "nom": "Noémie",
-      "numero": "",
+      "numero": "4",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -40,7 +40,7 @@
     },
     {
       "nom": "Ludivine",
-      "numero": "",
+      "numero": "5",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -76,7 +76,7 @@
     },
     {
       "nom": "Marina",
-      "numero": "",
+      "numero": "6",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -112,7 +112,7 @@
     },
     {
       "nom": "Emma",
-      "numero": "",
+      "numero": "7",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -148,7 +148,7 @@
     },
     {
       "nom": "Lou-Ann",
-      "numero": "",
+      "numero": "8",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -184,7 +184,7 @@
     },
     {
       "nom": "Julie C.",
-      "numero": "",
+      "numero": "9",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -220,7 +220,7 @@
     },
     {
       "nom": "Géraldine",
-      "numero": "",
+      "numero": "10",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -256,7 +256,7 @@
     },
     {
       "nom": "Sonia",
-      "numero": "",
+      "numero": "11",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -292,7 +292,7 @@
     },
     {
       "nom": "Julie L.",
-      "numero": "",
+      "numero": "12",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -328,7 +328,7 @@
     },
     {
       "nom": "Charlène",
-      "numero": "",
+      "numero": "13",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -364,7 +364,7 @@
     },
     {
       "nom": "Clémence",
-      "numero": "",
+      "numero": "14",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -400,7 +400,7 @@
     },
     {
       "nom": "Constance",
-      "numero": "",
+      "numero": "15",
       "statistiques": {
         "tirs": {
           "interieurs": {

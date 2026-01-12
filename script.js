@@ -507,6 +507,7 @@ class BasketStatsApp {
                         const player = {
                             id: Date.now() + Math.random(), // Générer un nouvel ID unique
                             name: joueuseData.nom || '',
+                            numero: joueuseData.numero || '',
                             stats: new PlayerStats()
                         };
 
@@ -557,6 +558,7 @@ class BasketStatsApp {
         const data = this.players.map(player => ({
             id: player.id,
             name: player.name,
+            numero: player.numero,
             stats: player.stats
         }));
         localStorage.setItem('basketStats', JSON.stringify(data));
@@ -571,6 +573,7 @@ class BasketStatsApp {
                     const player = {
                         id: playerData.id,
                         name: playerData.name,
+                        numero: playerData.numero || '',
                         stats: Object.assign(new PlayerStats(), playerData.stats)
                     };
                     this.players.push(player);
