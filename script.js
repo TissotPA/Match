@@ -45,6 +45,7 @@ class BasketStatsApp {
         this.playersContainer = document.getElementById('playersContainer');
         this.template = document.getElementById('playerCardTemplate');
         this.addPlayerBtn = document.getElementById('addPlayerBtn');
+        this.nouveauMatchBtn = document.getElementById('nouveauMatchBtn');
         this.importBtn = document.getElementById('importBtn');
         this.exportBtn = document.getElementById('exportBtn');
         this.cloturerBtn = document.getElementById('cloturerBtn');
@@ -114,6 +115,7 @@ class BasketStatsApp {
     init() {
         // Événements des boutons principaux
         this.addPlayerBtn.addEventListener('click', () => this.addPlayer());
+        this.nouveauMatchBtn.addEventListener('click', () => this.nouveauMatch());
         this.importBtn.addEventListener('click', () => this.fileInput.click());
         this.fileInput.addEventListener('change', (e) => this.importFromJSON(e));
         this.exportBtn.addEventListener('click', () => this.exportToJSON());
@@ -140,6 +142,72 @@ class BasketStatsApp {
         this.players.push(player);
         this.renderPlayer(player);
         this.saveToLocalStorage();
+    }
+
+    nouveauMatch() {
+        // Charger le fichier empty_PRF.json depuis la racine
+        fetch('empty_PRF.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fichier empty_PRF.json non trouvé');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Demander confirmation
+                this.showConfirm(
+                    '🆕 Nouveau match',
+                    `Charger un nouveau match avec ${data.joueuses?.length || 0} joueuse(s) ? Cela remplacera les données actuelles.`
+                ).then(confirmed => {
+                    if (!confirmed) return;
+
+                    // Effacer les données actuelles
+                    this.players = [];
+                    this.playersContainer.innerHTML = '';
+
+                    // Importer les joueuses du template
+                    if (data.joueuses && Array.isArray(data.joueuses)) {
+                        data.joueuses.forEach(joueuseData => {
+                            const player = {
+                                id: Date.now() + Math.random(),
+                                name: joueuseData.nom || '',
+                                stats: new PlayerStats()
+                            };
+
+                            // Charger les statistiques si présentes
+                            const stats = joueuseData.statistiques;
+                            if (stats) {
+                                if (stats.tirs) {
+                                    player.stats.tirsIntTentes = stats.tirs.interieurs?.tentes || 0;
+                                    player.stats.tirsIntReussis = stats.tirs.interieurs?.reussis || 0;
+                                    player.stats.tirsExtTentes = stats.tirs.exterieurs?.tentes || 0;
+                                    player.stats.tirsExtReussis = stats.tirs.exterieurs?.reussis || 0;
+                                    player.stats.tirs3Tentes = stats.tirs.trois_points?.tentes || 0;
+                                    player.stats.tirs3Reussis = stats.tirs.trois_points?.reussis || 0;
+                                    player.stats.lfTentes = stats.tirs.lancers_francs?.tentes || 0;
+                                    player.stats.lfReussis = stats.tirs.lancers_francs?.reussis || 0;
+                                }
+                                player.stats.rebonds = stats.rebonds || 0;
+                                player.stats.passes = stats.passes_decisives || 0;
+                                player.stats.interceptions = stats.interceptions || 0;
+                                player.stats.contres = stats.contres || 0;
+                                player.stats.balPerdus = stats.ballons_perdus || 0;
+                                player.stats.fautes = stats.fautes || 0;
+                            }
+
+                            this.players.push(player);
+                            this.renderPlayer(player);
+                        });
+                    }
+
+                    this.saveToLocalStorage();
+                    this.showAlert('✅ Succès', 'Nouveau match chargé !');
+                });
+            })
+            .catch(error => {
+                console.error('Erreur lors du chargement du fichier:', error);
+                this.showAlert('❌ Erreur', 'Impossible de charger le fichier empty_PRF.json. Assurez-vous qu\'il est présent à la racine du projet.');
+            });
     }
 
     cloturerMatch() {
