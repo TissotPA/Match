@@ -4,6 +4,7 @@
   "joueuses": [
     {
       "nom": "Noémie",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -39,6 +40,7 @@
     },
     {
       "nom": "Ludivine",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -74,6 +76,7 @@
     },
     {
       "nom": "Marina",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -109,6 +112,7 @@
     },
     {
       "nom": "Emma",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -144,6 +148,7 @@
     },
     {
       "nom": "Lou-Ann",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -179,6 +184,7 @@
     },
     {
       "nom": "Julie C.",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -214,6 +220,7 @@
     },
     {
       "nom": "Géraldine",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -249,6 +256,7 @@
     },
     {
       "nom": "Sonia",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -284,6 +292,7 @@
     },
     {
       "nom": "Julie L.",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -319,6 +328,7 @@
     },
     {
       "nom": "Charlène",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -354,6 +364,7 @@
     },
     {
       "nom": "Clémence",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {
@@ -389,6 +400,7 @@
     },
     {
       "nom": "Constance",
+      "numero": "",
       "statistiques": {
         "tirs": {
           "interieurs": {

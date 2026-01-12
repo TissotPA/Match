@@ -176,6 +176,7 @@ class BasketStatsApp {
                             const player = {
                                 id: Date.now() + Math.random(),
                                 name: joueuseData.nom || '',
+                                numero: joueuseData.numero || '',
                                 stats: new PlayerStats()
                             };
 
