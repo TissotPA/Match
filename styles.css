@@ -31,7 +31,35 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+.search-container {
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+}
+
+.search-input {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 16px;
+    border: 3px solid #DC143C;
+    border-radius: 10px;
+    background: white;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #B8102E;
+    box-shadow: 0 6px 12px rgba(220, 20, 60, 0.3);
+    transform: translateY(-2px);
+}
+
+.search-input::placeholder {
+    color: #999;
 }
 
 .add-player-btn,
@@ -142,9 +170,36 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 3px solid #DC143C;
+}
+
+.player-number {
+    width: 60px;
+    font-size: 1.3em;
+    font-weight: bold;
+    border: 2px solid #DC143C;
+    background: white;
+    color: #DC143C;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.player-number:focus {
+    outline: 2px solid #DC143C;
+    background: #fff5f5;
+}
+
+.player-number::placeholder {
+    color: #ffb3b3;
+}
+
+.player-number::-webkit-inner-spin-button,
+.player-number::-webkit-outer-spin-button {
+    opacity: 1;
 }
 
 .player-name {
@@ -432,6 +487,15 @@ h1 {
 
     .controls {
         flex-wrap: wrap;
+    }
+
+    .search-container {
+        margin-bottom: 20px;
+    }
+
+    .search-input {
+        padding: 12px 15px;
+        font-size: 15px;
     }
 
     .add-player-btn,

@@ -51,6 +51,7 @@ class BasketStatsApp {
         this.cloturerBtn = document.getElementById('cloturerBtn');
         this.resetAllBtn = document.getElementById('resetAllBtn');
         this.fileInput = document.getElementById('fileInput');
+        this.searchInput = document.getElementById('searchInput');
         
         // Modale
         this.modal = document.getElementById('customModal');
@@ -122,6 +123,9 @@ class BasketStatsApp {
         this.cloturerBtn.addEventListener('click', () => this.cloturerMatch());
         this.resetAllBtn.addEventListener('click', () => this.resetAll());
 
+        // Recherche
+        this.searchInput.addEventListener('input', (e) => this.filterPlayers(e.target.value));
+
         // Charger les données sauvegardées
         this.loadFromLocalStorage();
 
@@ -136,6 +140,7 @@ class BasketStatsApp {
         const player = {
             id: Date.now(),
             name: '',
+            numero: '',
             stats: new PlayerStats()
         };
 
@@ -243,6 +248,14 @@ class BasketStatsApp {
         const card = cardElement.querySelector('.player-card');
         card.dataset.playerId = player.id;
 
+        // Numéro de la joueuse
+        const numeroInput = card.querySelector('.player-number');
+        numeroInput.value = player.numero;
+        numeroInput.addEventListener('input', (e) => {
+            player.numero = e.target.value;
+            this.saveToLocalStorage();
+        });
+
         // Nom de la joueuse
         const nameInput = card.querySelector('.player-name');
         nameInput.value = player.name;
@@ -270,6 +283,30 @@ class BasketStatsApp {
 
         // Ajouter au container
         this.playersContainer.appendChild(card);
+    }
+
+    filterPlayers(searchTerm) {
+        const term = searchTerm.toLowerCase().trim();
+        const cards = this.playersContainer.querySelectorAll('.player-card');
+        
+        cards.forEach(card => {
+            const playerId = parseInt(card.dataset.playerId);
+            const player = this.players.find(p => p.id === playerId);
+            
+            if (!player) {
+                card.style.display = 'none';
+                return;
+            }
+            
+            const name = (player.name || '').toLowerCase();
+            const numero = (player.numero || '').toString();
+            
+            if (name.includes(term) || numero.includes(term)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
     }
 
     updateStat(playerId, statName, isIncrement) {
@@ -334,6 +371,30 @@ class BasketStatsApp {
         // Mettre à jour l'évaluation
         const evaluationValue = card.querySelector('.evaluation-value');
         evaluationValue.textContent = player.stats.getEvaluation();
+    }
+
+    filterPlayers(searchTerm) {
+        const term = searchTerm.toLowerCase().trim();
+        const cards = this.playersContainer.querySelectorAll('.player-card');
+        
+        cards.forEach(card => {
+            const playerId = parseInt(card.dataset.playerId);
+            const player = this.players.find(p => p.id === playerId);
+            
+            if (!player) {
+                card.style.display = 'none';
+                return;
+            }
+            
+            const name = (player.name || '').toLowerCase();
+            const numero = (player.numero || '').toString();
+            
+            if (name.includes(term) || numero.includes(term)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
     }
 
     removePlayer(playerId) {
