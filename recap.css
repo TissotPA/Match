@@ -462,15 +462,33 @@ body {
 
     .stats-collective-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .stat-collective {
+        padding: 15px;
     }
 
     .player-stats-grid {
         grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .player-stat-item {
+        padding: 10px;
     }
 
     .player-recap-header {
         flex-direction: column;
         text-align: center;
         gap: 10px;
+    }
+
+    .player-recap-name {
+        font-size: 1.3em;
+    }
+
+    .player-recap-points {
+        font-size: 1.6em;
     }
 }
