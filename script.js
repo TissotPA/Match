@@ -46,11 +46,8 @@ class BasketStatsApp {
         this.template = document.getElementById('playerCardTemplate');
         this.addPlayerBtn = document.getElementById('addPlayerBtn');
         this.nouveauMatchBtn = document.getElementById('nouveauMatchBtn');
-        this.importBtn = document.getElementById('importBtn');
-        this.exportBtn = document.getElementById('exportBtn');
         this.cloturerBtn = document.getElementById('cloturerBtn');
         this.resetAllBtn = document.getElementById('resetAllBtn');
-        this.fileInput = document.getElementById('fileInput');
         this.searchInput = document.getElementById('searchInput');
         
         // Modale
@@ -117,9 +114,6 @@ class BasketStatsApp {
         // Événements des boutons principaux
         this.addPlayerBtn.addEventListener('click', () => this.addPlayer());
         this.nouveauMatchBtn.addEventListener('click', () => this.nouveauMatch());
-        this.importBtn.addEventListener('click', () => this.fileInput.click());
-        this.fileInput.addEventListener('change', (e) => this.importFromJSON(e));
-        this.exportBtn.addEventListener('click', () => this.exportToJSON());
         this.cloturerBtn.addEventListener('click', () => this.cloturerMatch());
         this.resetAllBtn.addEventListener('click', () => this.resetAll());
 
