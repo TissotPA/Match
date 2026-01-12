@@ -1,0 +1,426 @@
+{
+  "date": "2026-01-12T12:41:40.249Z",
+  "nombreJoueuses": 12,
+  "joueuses": [
+    {
+      "nom": "Noémie",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    },
+    {
+      "nom": "Ludivine",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    },
+    {
+      "nom": "Marina",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    },
+    {
+      "nom": "Emma",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    },
+    {
+      "nom": "Lou-Ann",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    },
+    {
+      "nom": "Julie C.",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    },
+    {
+      "nom": "Géraldine",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    },
+    {
+      "nom": "Sonia",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    },
+    {
+      "nom": "Julie L.",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    },
+    {
+      "nom": "Charlène",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    },
+    {
+      "nom": "Clémence",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    },
+    {
+      "nom": "Constance",
+      "statistiques": {
+        "tirs": {
+          "interieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "exterieurs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "trois_points": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          },
+          "lancers_francs": {
+            "tentes": 0,
+            "reussis": 0,
+            "pourcentage": 0
+          }
+        },
+        "points": 0,
+        "rebonds": 0,
+        "passes_decisives": 0,
+        "interceptions": 0,
+        "contres": 0,
+        "ballons_perdus": 0,
+        "fautes": 0,
+        "evaluation": 0
+      }
+    }
+  ]
+}
