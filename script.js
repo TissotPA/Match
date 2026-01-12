@@ -227,6 +227,9 @@ class BasketStatsApp {
             return;
         }
 
+        // Exporter le JSON
+        this.exportToJSON();
+
         // Préparer les données pour le récapitulatif
         const recapData = {
             date: new Date().toLocaleString('fr-FR'),
