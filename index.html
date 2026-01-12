@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques Match Basket</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header fixe -->
+    <div class="header-fixed">
+        <div class="container-header">
+            <h1>📊 Statistiques Match Basket</h1>
+            
+            <div class="controls">
+                <button id="addPlayerBtn" class="add-player-btn">+ Ajouter une joueuse</button>
+                <button id="importBtn" class="import-btn">📂 Importer JSON</button>
+                <button id="exportBtn" class="export-btn">📥 Exporter JSON</button>
+                <button id="cloturerBtn" class="cloturer-btn">🏆 Clôturer match</button>
+                <button id="resetAllBtn" class="reset-btn">Réinitialiser tout</button>
+                <input type="file" id="fileInput" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Zone scrollable -->
+    <div class="content-scrollable">
+        <div class="container">
+            <div id="playersContainer" class="players-container">
+                <!-- Les cartes des joueuses seront ajoutées ici dynamiquement -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale personnalisée -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle" class="modal-title"></h2>
+            <p id="modalMessage" class="modal-message"></p>
+            <div class="modal-buttons">
+                <button id="modalConfirm" class="modal-btn modal-btn-confirm">Confirmer</button>
+                <button id="modalCancel" class="modal-btn modal-btn-cancel">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template pour une carte de joueuse -->
+    <template id="playerCardTemplate">
+        <div class="player-card">
+            <div class="player-header">
+                <input type="text" class="player-name" placeholder="Nom de la joueuse">
+                <button class="remove-player-btn">✕</button>
+            </div>
+            
+            <!-- Section TIRS -->
+            <div class="section-container">
+                <h2 class="section-title">🏀 TIRS</h2>
+                <div class="stats-grid">
+                    <!-- Tirs intérieurs -->
+                    <div class="stat-group">
+                        <h3>Tirs Intérieurs</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">Tentés</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="tirsIntTentes">-</button>
+                                <span class="stat-value" data-stat="tirsIntTentes">0</span>
+                                <button class="stat-btn plus" data-stat="tirsIntTentes">+</button>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Réussis</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="tirsIntReussis">-</button>
+                                <span class="stat-value" data-stat="tirsIntReussis">0</span>
+                                <button class="stat-btn plus" data-stat="tirsIntReussis">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tirs extérieurs -->
+                    <div class="stat-group">
+                        <h3>Tirs Extérieurs</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">Tentés</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="tirsExtTentes">-</button>
+                                <span class="stat-value" data-stat="tirsExtTentes">0</span>
+                                <button class="stat-btn plus" data-stat="tirsExtTentes">+</button>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Réussis</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="tirsExtReussis">-</button>
+                                <span class="stat-value" data-stat="tirsExtReussis">0</span>
+                                <button class="stat-btn plus" data-stat="tirsExtReussis">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tirs à 3 points -->
+                    <div class="stat-group">
+                        <h3>Tirs à 3 Points</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">Tentés</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="tirs3Tentes">-</button>
+                                <span class="stat-value" data-stat="tirs3Tentes">0</span>
+                                <button class="stat-btn plus" data-stat="tirs3Tentes">+</button>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Réussis</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="tirs3Reussis">-</button>
+                                <span class="stat-value" data-stat="tirs3Reussis">0</span>
+                                <button class="stat-btn plus" data-stat="tirs3Reussis">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lancers Francs -->
+                    <div class="stat-group">
+                        <h3>Lancers Francs</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">Tentés</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="lfTentes">-</button>
+                                <span class="stat-value" data-stat="lfTentes">0</span>
+                                <button class="stat-btn plus" data-stat="lfTentes">+</button>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Réussis</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="lfReussis">-</button>
+                                <span class="stat-value" data-stat="lfReussis">0</span>
+                                <button class="stat-btn plus" data-stat="lfReussis">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section AUTRES STATS -->
+            <div class="section-container">
+                <h2 class="section-title">📊 STATISTIQUES</h2>
+                <div class="stats-grid">
+                    <div class="stat-group">
+                        <h3>Points</h3>
+                        <div class="stat-item">
+                            <div class="stat-controls">
+                                <span class="stat-value-large points-value">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-group">
+                        <h3>Rebonds</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">&nbsp;</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="rebonds">-</button>
+                                <span class="stat-value" data-stat="rebonds">0</span>
+                                <button class="stat-btn plus" data-stat="rebonds">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-group">
+                        <h3>Passes Décisives</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">&nbsp;</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="passes">-</button>
+                                <span class="stat-value" data-stat="passes">0</span>
+                                <button class="stat-btn plus" data-stat="passes">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-group">
+                        <h3>Interceptions</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">&nbsp;</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="interceptions">-</button>
+                                <span class="stat-value" data-stat="interceptions">0</span>
+                                <button class="stat-btn plus" data-stat="interceptions">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-group">
+                        <h3>Contres</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">&nbsp;</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="contres">-</button>
+                                <span class="stat-value" data-stat="contres">0</span>
+                                <button class="stat-btn plus" data-stat="contres">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-group">
+                        <h3>Ballons Perdus</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">&nbsp;</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="balPerdus">-</button>
+                                <span class="stat-value" data-stat="balPerdus">0</span>
+                                <button class="stat-btn plus" data-stat="balPerdus">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-group">
+                        <h3>Fautes</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">&nbsp;</span>
+                            <div class="stat-controls">
+                                <button class="stat-btn minus" data-stat="fautes">-</button>
+                                <span class="stat-value" data-stat="fautes">0</span>
+                                <button class="stat-btn plus" data-stat="fautes">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Évaluation totale -->
+            <div class="total-evaluation">
+                <span class="evaluation-label">ÉVALUATION</span>
+                <span class="evaluation-value">0</span>
+            </div>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>

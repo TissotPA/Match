@@ -1,0 +1,476 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border: 3px solid #DC143C;
+}
+
+.header h1 {
+    color: #DC143C;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.date {
+    color: #666;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.print-btn {
+    background-color: #DC143C;
+    color: white;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.print-btn:hover {
+    background-color: #B8102E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.section-collective,
+.section-individual {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border: 3px solid #DC143C;
+}
+
+.section-collective h2,
+.section-individual h2 {
+    color: #DC143C;
+    font-size: 2em;
+    margin-bottom: 25px;
+    text-align: center;
+    border-bottom: 3px solid #DC143C;
+    padding-bottom: 15px;
+}
+
+.stats-collective-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-collective {
+    background: #fff5f5;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #ffcccc;
+    transition: transform 0.3s ease;
+}
+
+.stat-collective:hover {
+    transform: translateY(-5px);
+}
+
+.stat-collective.highlight {
+    background: linear-gradient(135deg, #DC143C 0%, #B8102E 100%);
+    border: 2px solid #DC143C;
+}
+
+.stat-collective.highlight h3 {
+    color: white;
+}
+
+.stat-collective.highlight .stat-value-collective {
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.stat-collective h3 {
+    color: #DC143C;
+    font-size: 1em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.stat-value-collective {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #DC143C;
+    margin-bottom: 5px;
+}
+
+.stat-detail {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.players-recap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.player-recap-card {
+    background: #fff5f5;
+    border: 2px solid #DC143C;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.player-recap-header {
+    background: linear-gradient(135deg, #DC143C 0%, #B8102E 100%);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-recap-name {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.player-recap-points {
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.player-recap-points-label {
+    font-size: 0.6em;
+    display: block;
+    opacity: 0.9;
+}
+
+.player-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.player-stat-item {
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ffcccc;
+}
+
+.player-stat-label {
+    color: #DC143C;
+    font-weight: bold;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.player-stat-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.player-stat-percentage {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 3px;
+}
+
+.player-evaluation {
+    background: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 15px;
+    border: 2px solid #FFA500;
+}
+
+.player-evaluation-label {
+    color: #333;
+    font-weight: bold;
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+
+.player-evaluation-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Impression */
+@media print {
+    body {
+        background: white !important;
+        padding: 0;
+        margin: 0;
+    }
+
+    .print-btn {
+        display: none !important;
+    }
+
+    .header {
+        background: white !important;
+        box-shadow: none;
+        border: 3px solid #DC143C !important;
+        page-break-after: avoid;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        color: #DC143C !important;
+        font-size: 2em;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .date {
+        color: #333 !important;
+        font-size: 1em;
+    }
+
+    /* Stats collectives sur une page séparée */
+    .section-collective {
+        background: white !important;
+        box-shadow: none;
+        border: 3px solid #DC143C !important;
+        page-break-after: always;
+        page-break-inside: avoid;
+        padding: 20px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .section-collective h2 {
+        color: #DC143C !important;
+        font-size: 1.8em;
+        border-bottom: 3px solid #DC143C !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .stats-collective-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .stat-collective {
+        background: #f5f5f5 !important;
+        border: 2px solid #DC143C !important;
+        padding: 15px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .stat-collective.highlight {
+        background: #DC143C !important;
+        border: 2px solid #DC143C !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .stat-collective.highlight h3,
+    .stat-collective.highlight .stat-value-collective {
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .stat-collective h3 {
+        color: #DC143C !important;
+        font-size: 0.9em;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .stat-value-collective {
+        color: #DC143C !important;
+        font-size: 2em;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .stat-detail {
+        color: #666 !important;
+        font-size: 0.85em;
+    }
+
+    /* Stats individuelles */
+    .section-individual {
+        background: white !important;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+    }
+
+    .section-individual h2 {
+        color: #DC143C !important;
+        font-size: 1.8em;
+        border-bottom: 3px solid #DC143C !important;
+        padding: 20px;
+        margin-bottom: 20px;
+        page-break-after: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .players-recap {
+        gap: 0;
+    }
+
+    /* 3 joueuses par page */
+    .player-recap-card {
+        background: white !important;
+        border: 3px solid #DC143C !important;
+        page-break-inside: avoid;
+        padding: 15px;
+        margin-bottom: 15px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .player-recap-card:nth-child(3n+1) {
+        page-break-before: always;
+    }
+
+    .player-recap-card:first-child {
+        page-break-before: auto;
+    }
+
+    .player-recap-header {
+        background: #DC143C !important;
+        color: white !important;
+        padding: 12px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .player-recap-name {
+        font-size: 1.3em;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .player-recap-points {
+        font-size: 1.5em;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .player-recap-points-label {
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .player-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .player-stat-item {
+        background: #f5f5f5 !important;
+        border: 1px solid #DC143C !important;
+        padding: 10px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .player-stat-label {
+        color: #DC143C !important;
+        font-size: 0.75em;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .player-stat-value {
+        color: #333 !important;
+        font-size: 1.3em;
+    }
+
+    .player-stat-percentage {
+        color: #666 !important;
+        font-size: 0.8em;
+    }
+
+    .player-evaluation {
+        background: #FFD700 !important;
+        border: 2px solid #FFA500 !important;
+        padding: 12px;
+        margin-top: 12px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .player-evaluation-label {
+        color: #333 !important;
+        font-size: 0.8em;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .player-evaluation-value {
+        color: #333 !important;
+        font-size: 1.5em;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.8em;
+    }
+
+    .stats-collective-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .player-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .player-recap-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+}

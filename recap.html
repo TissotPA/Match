@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Récapitulatif Match - Basket</title>
+    <link rel="stylesheet" href="recap.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏀 Récapitulatif du Match</h1>
+            <p class="date" id="matchDate"></p>
+            <button onclick="window.print()" class="print-btn">🖨️ Imprimer</button>
+        </div>
+
+        <!-- Statistiques collectives -->
+        <section class="section-collective">
+            <h2>📊 STATISTIQUES COLLECTIVES</h2>
+            <div class="stats-collective-grid">
+                <div class="stat-collective">
+                    <h3>Tirs Intérieurs</h3>
+                    <div class="stat-value-collective" id="tirsIntPct">0%</div>
+                    <div class="stat-detail" id="tirsIntDetail">0/0</div>
+                </div>
+
+                <div class="stat-collective">
+                    <h3>Tirs Extérieurs</h3>
+                    <div class="stat-value-collective" id="tirsExtPct">0%</div>
+                    <div class="stat-detail" id="tirsExtDetail">0/0</div>
+                </div>
+
+                <div class="stat-collective">
+                    <h3>Tirs à 3 Points</h3>
+                    <div class="stat-value-collective" id="tirs3Pct">0%</div>
+                    <div class="stat-detail" id="tirs3Detail">0/0</div>
+                </div>
+
+                <div class="stat-collective">
+                    <h3>Lancers Francs</h3>
+                    <div class="stat-value-collective" id="lfPct">0%</div>
+                    <div class="stat-detail" id="lfDetail">0/0</div>
+                </div>
+
+                <div class="stat-collective highlight">
+                    <h3>Points Totaux</h3>
+                    <div class="stat-value-collective" id="pointsTotal">0</div>
+                </div>
+
+                <div class="stat-collective">
+                    <h3>Rebonds</h3>
+                    <div class="stat-value-collective" id="rebondsTotal">0</div>
+                </div>
+
+                <div class="stat-collective">
+                    <h3>Passes Décisives</h3>
+                    <div class="stat-value-collective" id="passesTotal">0</div>
+                </div>
+
+                <div class="stat-collective">
+                    <h3>Interceptions</h3>
+                    <div class="stat-value-collective" id="interceptionsTotal">0</div>
+                </div>
+
+                <div class="stat-collective">
+                    <h3>Contres</h3>
+                    <div class="stat-value-collective" id="contresTotal">0</div>
+                </div>
+
+                <div class="stat-collective">
+                    <h3>Ballons Perdus</h3>
+                    <div class="stat-value-collective" id="balPerdusTotal">0</div>
+                </div>
+
+                <div class="stat-collective">
+                    <h3>Fautes</h3>
+                    <div class="stat-value-collective" id="fautesTotal">0</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistiques individuelles -->
+        <section class="section-individual">
+            <h2>👤 STATISTIQUES INDIVIDUELLES</h2>
+            <div id="playersRecap" class="players-recap">
+                <!-- Les statistiques individuelles seront ajoutées ici -->
+            </div>
+        </section>
+    </div>
+
+    <script src="recap.js"></script>
+</body>
+</html>
