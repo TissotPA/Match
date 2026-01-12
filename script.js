@@ -51,6 +51,7 @@ class BasketStatsApp {
         this.cloturerBtn = document.getElementById('cloturerBtn');
         this.resetAllBtn = document.getElementById('resetAllBtn');
         this.fileInput = document.getElementById('fileInput');
+        this.searchInput = document.getElementById('searchInput');
         
         // Modale
         this.modal = document.getElementById('customModal');
@@ -121,6 +122,9 @@ class BasketStatsApp {
         this.exportBtn.addEventListener('click', () => this.exportToJSON());
         this.cloturerBtn.addEventListener('click', () => this.cloturerMatch());
         this.resetAllBtn.addEventListener('click', () => this.resetAll());
+
+        // Recherche
+        this.searchInput.addEventListener('input', (e) => this.filterPlayers(e.target.value));
 
         // Charger les données sauvegardées
         this.loadFromLocalStorage();
@@ -280,6 +284,36 @@ class BasketStatsApp {
 
         // Ajouter au container
         this.playersContainer.appendChild(card);
+    }
+
+    filterPlayers(searchTerm) {
+        const term = searchTerm.toLowerCase().trim();
+        const cards = this.playersContainer.querySelectorAll('.player-card');
+        
+        cards.forEach(card => {
+            const playerId = parseFloat(card.dataset.playerId);
+            const player = this.players.find(p => p.id === playerId);
+            
+            if (!player) {
+                card.style.display = 'none';
+                return;
+            }
+            
+            // Si pas de terme de recherche, tout afficher
+            if (term === '') {
+                card.style.display = 'block';
+                return;
+            }
+            
+            const name = (player.name || '').toLowerCase();
+            const numero = (player.numero || '').toString().toLowerCase();
+            
+            if (name.includes(term) || numero.includes(term)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
     }
 
     updateStat(playerId, statName, isIncrement) {
