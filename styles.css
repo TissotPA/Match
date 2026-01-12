@@ -9,6 +9,9 @@ body {
     background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
     min-height: 100vh;
     padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
 .container {

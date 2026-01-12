@@ -146,14 +146,18 @@ class BasketStatsApp {
 
     nouveauMatch() {
         // Charger le fichier empty_PRF.json depuis la racine
+        console.log('Chargement du fichier empty_PRF.json...');
+        
         fetch('empty_PRF.json')
             .then(response => {
+                console.log('Réponse reçue:', response.status, response.statusText);
                 if (!response.ok) {
-                    throw new Error('Fichier empty_PRF.json non trouvé');
+                    throw new Error(`Erreur HTTP: ${response.status}`);
                 }
                 return response.json();
             })
             .then(data => {
+                console.log('Données chargées:', data);
                 // Demander confirmation
                 this.showConfirm(
                     '🆕 Nouveau match',
@@ -201,12 +205,13 @@ class BasketStatsApp {
                     }
 
                     this.saveToLocalStorage();
-                    this.showAlert('✅ Succès', 'Nouveau match chargé !');
+                    this.showAlert('✅ Succès', `Nouveau match chargé avec ${data.joueuses?.length || 0} joueuse(s) !`);
                 });
             })
             .catch(error => {
                 console.error('Erreur lors du chargement du fichier:', error);
-                this.showAlert('❌ Erreur', 'Impossible de charger le fichier empty_PRF.json. Assurez-vous qu\'il est présent à la racine du projet.');
+                const errorMsg = error.message || 'Erreur inconnue';
+                this.showAlert('❌ Erreur', `Impossible de charger le fichier empty_PRF.json.\n\nDétails: ${errorMsg}\n\nVérifiez que le fichier est bien présent dans le dépôt GitHub.`);
             });
     }
 
