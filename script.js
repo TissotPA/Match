@@ -285,30 +285,6 @@ class BasketStatsApp {
         this.playersContainer.appendChild(card);
     }
 
-    filterPlayers(searchTerm) {
-        const term = searchTerm.toLowerCase().trim();
-        const cards = this.playersContainer.querySelectorAll('.player-card');
-        
-        cards.forEach(card => {
-            const playerId = parseInt(card.dataset.playerId);
-            const player = this.players.find(p => p.id === playerId);
-            
-            if (!player) {
-                card.style.display = 'none';
-                return;
-            }
-            
-            const name = (player.name || '').toLowerCase();
-            const numero = (player.numero || '').toString();
-            
-            if (name.includes(term) || numero.includes(term)) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-
     updateStat(playerId, statName, isIncrement) {
         const player = this.players.find(p => p.id === playerId);
         if (!player) return;
@@ -383,6 +359,12 @@ class BasketStatsApp {
             
             if (!player) {
                 card.style.display = 'none';
+                return;
+            }
+            
+            // Si pas de terme de recherche, tout afficher
+            if (term === '') {
+                card.style.display = 'block';
                 return;
             }
             
