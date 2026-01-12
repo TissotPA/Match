@@ -287,7 +287,12 @@ class BasketStatsApp {
     }
 
     filterPlayers(searchTerm) {
-        const term = searchTerm.toLowerCase().trim();
+        const normalizeText = (str) => {
+            if (!str) return '';
+            return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        };
+        
+        const term = normalizeText(searchTerm.trim());
         const cards = this.playersContainer.querySelectorAll('.player-card');
         
         cards.forEach(card => {
@@ -305,8 +310,8 @@ class BasketStatsApp {
                 return;
             }
             
-            const name = (player.name || '').toLowerCase();
-            const numero = (player.numero || '').toString().toLowerCase();
+            const name = normalizeText(player.name || '');
+            const numero = normalizeText((player.numero || '').toString());
             
             if (name.includes(term) || numero.includes(term)) {
                 card.style.display = 'block';
