@@ -418,20 +418,17 @@ h1 {
 
 /* Responsive */
 @media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
     h1 {
-        font-size: 1.8em;
-    }
-
-    .players-container {
-        grid-template-columns: 1fr;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
+        font-size: 1.5em;
+        margin-bottom: 20px;
     }
 
     .controls {
-        flex-direction: column;
+        flex-wrap: wrap;
     }
 
     .add-player-btn,
@@ -440,7 +437,81 @@ h1 {
     .export-btn,
     .cloturer-btn,
     .reset-btn {
-        width: 100%;
+        width: calc(50% - 7.5px);
+        padding: 15px 10px;
+        font-size: 14px;
+    }
+
+    .players-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .player-card {
+        padding: 15px;
+    }
+
+    .player-name {
+        font-size: 1.1em;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .stat-value {
+        min-width: 40px;
+        font-size: 1.2em;
+    }
+
+    .section-title {
+        font-size: 1em;
+    }
+
+    .stat-group h3 {
+        font-size: 0.85em;
+    }
+
+    .stat-label {
+        font-size: 0.8em;
+    }
+
+    .total-evaluation {
+        padding: 12px;
+    }
+
+    .evaluation-label {
+        font-size: 0.75em;
+    }
+
+    .evaluation-value {
+        font-size: 1.8em;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .modal-title {
+        font-size: 1.2em;
+    }
+
+    .modal-message {
+        font-size: 1em;
+    }
+
+    .modal-btn {
+        padding: 14px 20px;
+        font-size: 15px;
     }
 }
 
