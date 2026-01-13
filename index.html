@@ -13,17 +13,17 @@
         <h1>📊 Statistiques Match Basket</h1>
         
         <div class="controls">
-            <button id="addPlayerBtn" class="add-player-btn">+ Ajouter une joueuse</button>
-            <button id="nouveauMatchBtn" class="nouveau-match-btn">🆕 Nouveau match</button>
-            <button id="importBtn" class="import-btn">📂 Importer JSON</button>
-            <button id="exportBtn" class="export-btn">📥 Exporter JSON</button>
-            <button id="cloturerBtn" class="cloturer-btn">🏆 Clôturer match</button>
-            <button id="resetAllBtn" class="reset-btn">Réinitialiser tout</button>
-            <input type="file" id="fileInput" accept=".json" style="display: none;">
+            <button id="addPlayerBtn" class="add-player-btn" aria-label="Ajouter une nouvelle joueuse">+ Ajouter une joueuse</button>
+            <button id="nouveauMatchBtn" class="nouveau-match-btn" aria-label="Charger un nouveau match depuis le template">🆕 Nouveau match</button>
+            <button id="importBtn" class="import-btn" aria-label="Importer des données depuis un fichier JSON">📂 Importer JSON</button>
+            <button id="exportBtn" class="export-btn" aria-label="Exporter les statistiques en fichier JSON">📥 Exporter JSON</button>
+            <button id="cloturerBtn" class="cloturer-btn" aria-label="Clôturer le match et générer le récapitulatif">🏆 Clôturer match</button>
+            <button id="resetAllBtn" class="reset-btn" aria-label="Réinitialiser toutes les statistiques">🗑️ Réinitialiser tout</button>
+            <input type="file" id="fileInput" accept=".json" style="display: none;" aria-label="Sélecteur de fichier JSON">
         </div>
 
-        <div class="search-container">
-            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Rechercher par nom ou numéro...">
+        <div class="search-container" role="search">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Rechercher par nom ou numéro..." aria-label="Rechercher une joueuse par nom ou numéro">
         </div>
 
         <div id="playersContainer" class="players-container">
@@ -45,11 +45,11 @@
 
     <!-- Template pour une carte de joueuse -->
     <template id="playerCardTemplate">
-        <div class="player-card">
+        <div class="player-card" role="article" aria-label="Carte statistiques joueuse">
             <div class="player-header">
-                <input type="text" class="player-number" placeholder="N°" maxlength="2">
-                <input type="text" class="player-name" placeholder="Nom de la joueuse">
-                <button class="remove-player-btn">✕</button>
+                <input type="text" class="player-number" placeholder="N°" maxlength="2" aria-label="Numéro de la joueuse">
+                <input type="text" class="player-name" placeholder="Nom de la joueuse" aria-label="Nom de la joueuse">
+                <button class="remove-player-btn" aria-label="Supprimer cette joueuse">✕</button>
             </div>
             
             <!-- Section TIRS -->

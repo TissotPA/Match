@@ -1,6 +1,94 @@
-// Classe pour gérer les statistiques d'une joueuse
+/**
+ * ========================================
+ * Basketball Match Statistics Application
+ * ========================================
+ * 
+ * Application de suivi statistique en temps réel pour matchs de basketball.
+ * Comprend le tracking de toutes les statistiques, import/export JSON, 
+ * et génération de récapitulatifs de match.
+ * 
+ * @author Pierre-Antoine Tissot
+ * @version 2.0.0
+ */
+
+// ========================================
+// FONCTIONS UTILITAIRES
+// ========================================
+
+/**
+ * Normalise un texte en supprimant les accents et en passant en minuscules
+ * Utilisé pour la recherche insensible aux accents
+ * @param {string} text - Texte à normaliser
+ * @returns {string} Texte normalisé sans accents ni majuscules
+ */
+function normalizeText(text) {
+    if (!text) return '';
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+// ========================================
+// CONSTANTES
+// ========================================
+
+/** @const {number} - Multiplicateur pour génération d'IDs uniques */
+const ID_MULTIPLIER = 1000;
+
+/** @const {string} - Clé localStorage pour sauvegarde des données */
+const STORAGE_KEY = 'basketStats';
+
+/** @const {string} - Clé sessionStorage pour données récapitulatives */
+const SESSION_RECAP_KEY = 'recapMatch';
+
+/** @const {string} - URL du template pour nouveau match */
+const TEMPLATE_URL = 'empty_PRF.json';
+
+/** @const {string} - URL de la page de récapitulatif */
+const RECAP_PAGE_URL = 'recap.html';
+
+/** @const {Object} - Messages d'erreur standardisés */
+const ERROR_MESSAGES = {
+    NO_PLAYERS: 'Ajoutez au moins une joueuse avant de clôturer le match.',
+    INVALID_JSON: 'Fichier JSON invalide : structure incorrecte',
+    IMPORT_ERROR: 'Erreur lors de la lecture du fichier JSON. Vérifiez que le fichier est valide.',
+    TEMPLATE_ERROR: 'Impossible de charger le fichier empty_PRF.json.\n\nVérifiez que le fichier est bien présent dans le dépôt GitHub.',
+    FETCH_ERROR: 'Erreur de chargement du template'
+};
+
+/** @const {Object} - Messages de succès standardisés */
+const SUCCESS_MESSAGES = {
+    IMPORT_SUCCESS: (count) => `Import réussi : ${count} joueuse(s) importée(s)`,
+    RESET_CONFIRM: 'Êtes-vous sûr de vouloir réinitialiser toutes les statistiques ?',
+    REMOVE_CONFIRM: 'Êtes-vous sûr de vouloir supprimer cette joueuse ?',
+    NEW_MATCH_CONFIRM: (count) => `Charger un nouveau match avec ${count} joueuses ? Cela remplacera les données actuelles.`,
+    IMPORT_CONFIRM: (count) => `Importer ${count} joueuse(s) ? Cela remplacera les données actuelles.`
+};
+
+// ========================================
+// FONCTIONS UTILITAIRES
+// ========================================
+
+/**
+ * Normalise un texte en supprimant les accents et en passant en minuscules
+ * Utilisé pour la recherche insensible aux accents
+ * @param {string} text - Texte à normaliser
+ * @returns {string} Texte normalisé sans accents ni majuscules
+ */
+function normalizeText(text) {
+    if (!text) return '';
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+// ========================================
+// CLASSES
+// ========================================
+
+/**
+ * Classe représentant les statistiques d'une joueuse
+ * Gère toutes les stats individuelles et les calculs dérivés (points, évaluation)
+ */
 class PlayerStats {
     constructor() {
+        // Stats de tirs
         this.tirsIntTentes = 0;
         this.tirsIntReussis = 0;
         this.tirsExtTentes = 0;
@@ -9,6 +97,8 @@ class PlayerStats {
         this.tirs3Reussis = 0;
         this.lfTentes = 0;
         this.lfReussis = 0;
+        
+        // Autres stats
         this.rebonds = 0;
         this.passes = 0;
         this.fautes = 0;
@@ -17,7 +107,10 @@ class PlayerStats {
         this.contres = 0;
     }
 
-    // Calcul automatique des points
+    /**
+     * Calcule le total de points de la joueuse
+     * @returns {number} Total des points marqués
+     */
     getTotalPoints() {
         const pointsLF = this.lfReussis * 1;
         const pointsTirsInt = this.tirsIntReussis * 2;
@@ -26,7 +119,11 @@ class PlayerStats {
         return pointsLF + pointsTirsInt + pointsTirsExt + points3pts;
     }
 
-    // Calcul de l'évaluation
+    /**
+     * Calcule l'évaluation de la joueuse selon la formule standard
+     * Formule: (Points + Rebonds + Passes + Interceptions + Contres) - (Tirs ratés + LF ratés + Balles perdues)
+     * @returns {number} Score d'évaluation
+     */
     getEvaluation() {
         const points = this.getTotalPoints();
         const tirsRates = (this.tirsIntTentes - this.tirsIntReussis) + 
@@ -38,10 +135,19 @@ class PlayerStats {
     }
 }
 
-// Gestionnaire principal de l'application
+/**
+ * Gestionnaire principal de l'application de statistiques
+ * Coordonne toutes les interactions utilisateur et la gestion des données
+ */
 class BasketStatsApp {
+    /**
+     * Initialise l'application et configure tous les gestionnaires d'événements
+     */
     constructor() {
+        /** @type {Array<{id: number, name: string, numero: string, stats: PlayerStats}>} */
         this.players = [];
+        
+        // Références DOM
         this.playersContainer = document.getElementById('playersContainer');
         this.template = document.getElementById('playerCardTemplate');
         this.addPlayerBtn = document.getElementById('addPlayerBtn');
@@ -53,7 +159,7 @@ class BasketStatsApp {
         this.fileInput = document.getElementById('fileInput');
         this.searchInput = document.getElementById('searchInput');
         
-        // Modale
+        // Références modale
         this.modal = document.getElementById('customModal');
         this.modalTitle = document.getElementById('modalTitle');
         this.modalMessage = document.getElementById('modalMessage');
@@ -63,7 +169,12 @@ class BasketStatsApp {
         this.init();
     }
 
-    // Fonction pour afficher une confirmation personnalisée
+    /**
+     * Affiche une modale de confirmation personnalisée
+     * @param {string} title - Titre de la modale
+     * @param {string} message - Message à afficher
+     * @returns {Promise<boolean>} Promise résolue avec true si confirmé, false sinon
+     */
     showConfirm(title, message) {
         return new Promise((resolve) => {
             this.modalTitle.textContent = title;
@@ -93,7 +204,12 @@ class BasketStatsApp {
         });
     }
 
-    // Fonction pour afficher une alerte personnalisée
+    /**
+     * Affiche une modale d'alerte personnalisée
+     * @param {string} title - Titre de l'alerte
+     * @param {string} message - Message à afficher
+     * @returns {Promise<void>} Promise résolue quand l'utilisateur ferme l'alerte
+     */
     showAlert(title, message) {
         return new Promise((resolve) => {
             this.modalTitle.textContent = title;
@@ -113,18 +229,21 @@ class BasketStatsApp {
         });
     }
 
+    /**
+     * Initialise les event listeners et charge les données sauvegardées
+     */
     init() {
         // Événements des boutons principaux
-        this.addPlayerBtn.addEventListener('click', () => this.addPlayer());
-        this.nouveauMatchBtn.addEventListener('click', () => this.nouveauMatch());
-        this.importBtn.addEventListener('click', () => this.fileInput.click());
-        this.fileInput.addEventListener('change', (e) => this.importFromJSON(e));
-        this.exportBtn.addEventListener('click', () => this.exportToJSON());
-        this.cloturerBtn.addEventListener('click', () => this.cloturerMatch());
-        this.resetAllBtn.addEventListener('click', () => this.resetAll());
+        this.addPlayerBtn?.addEventListener('click', () => this.addPlayer());
+        this.nouveauMatchBtn?.addEventListener('click', () => this.nouveauMatch());
+        this.importBtn?.addEventListener('click', () => this.fileInput?.click());
+        this.fileInput?.addEventListener('change', (e) => this.importFromJSON(e));
+        this.exportBtn?.addEventListener('click', () => this.exportToJSON());
+        this.cloturerBtn?.addEventListener('click', () => this.cloturerMatch());
+        this.resetAllBtn?.addEventListener('click', () => this.resetAll());
 
         // Recherche
-        this.searchInput.addEventListener('input', (e) => this.filterPlayers(e.target.value));
+        this.searchInput?.addEventListener('input', (e) => this.filterPlayers(e.target.value));
 
         // Charger les données sauvegardées
         this.loadFromLocalStorage();
@@ -135,10 +254,22 @@ class BasketStatsApp {
         }
     }
 
+    /**
+     * Génère un ID unique pour une joueuse
+     * Utilise Date.now() + random pour éviter les collisions
+     * @returns {number} ID unique (décimal)
+     */
+    generatePlayerId() {
+        return Date.now() + Math.random() * ID_MULTIPLIER;
+    }
+
+    /**
+     * Ajoute une nouvelle joueuse vide à la liste
+     * Crée l'objet player, l'affiche et sauvegarde
+     */
     addPlayer() {
-        // Créer une nouvelle joueuse
         const player = {
-            id: Date.now(),
+            id: this.generatePlayerId(),
             name: '',
             numero: '',
             stats: new PlayerStats()
@@ -149,81 +280,101 @@ class BasketStatsApp {
         this.saveToLocalStorage();
     }
 
-    nouveauMatch() {
-        // Charger le fichier empty_PRF.json depuis la racine
-        console.log('Chargement du fichier empty_PRF.json...');
-        
-        fetch('empty_PRF.json')
-            .then(response => {
-                console.log('Réponse reçue:', response.status, response.statusText);
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Données chargées:', data);
-                // Demander confirmation
-                this.showConfirm(
-                    '🆕 Nouveau match',
-                    `Charger un nouveau match avec ${data.joueuses?.length || 0} joueuse(s) ? Cela remplacera les données actuelles.`
-                ).then(confirmed => {
-                    if (!confirmed) return;
+    /**
+     * Charge un nouveau match depuis le template empty_PRF.json
+     * Demande confirmation avant d'écraser les données actuelles
+     * @returns {Promise<void>}
+     */
+    async nouveauMatch() {
+        try {
+            console.log('Chargement du fichier empty_PRF.json...');
+            
+            const response = await fetch(TEMPLATE_URL);
+            console.log('Réponse reçue:', response.status, response.statusText);
+            
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log('Données chargées:', data);
+            
+            // Demander confirmation
+            const confirmed = await this.showConfirm(
+                '🆕 Nouveau match',
+                SUCCESS_MESSAGES.NEW_MATCH_CONFIRM(data.joueuses?.length || 0)
+            );
+            
+            if (!confirmed) return;
 
-                    // Effacer les données actuelles
-                    this.players = [];
-                    this.playersContainer.innerHTML = '';
+            // Effacer les données actuelles
+            this.players = [];
+            this.playersContainer.innerHTML = '';
 
-                    // Importer les joueuses du template
-                    if (data.joueuses && Array.isArray(data.joueuses)) {
-                        data.joueuses.forEach(joueuseData => {
-                            const player = {
-                                id: Date.now() + Math.random(),
-                                name: joueuseData.nom || '',
-                                numero: joueuseData.numero || '',
-                                stats: new PlayerStats()
-                            };
+            // Importer les joueuses du template
+            if (data.joueuses && Array.isArray(data.joueuses)) {
+                data.joueuses.forEach(joueuseData => {
+                    const player = {
+                        id: this.generatePlayerId(),
+                        name: joueuseData.nom || '',
+                        numero: joueuseData.numero || '',
+                        stats: new PlayerStats()
+                    };
 
-                            // Charger les statistiques si présentes
-                            const stats = joueuseData.statistiques;
-                            if (stats) {
-                                if (stats.tirs) {
-                                    player.stats.tirsIntTentes = stats.tirs.interieurs?.tentes || 0;
-                                    player.stats.tirsIntReussis = stats.tirs.interieurs?.reussis || 0;
-                                    player.stats.tirsExtTentes = stats.tirs.exterieurs?.tentes || 0;
-                                    player.stats.tirsExtReussis = stats.tirs.exterieurs?.reussis || 0;
-                                    player.stats.tirs3Tentes = stats.tirs.trois_points?.tentes || 0;
-                                    player.stats.tirs3Reussis = stats.tirs.trois_points?.reussis || 0;
-                                    player.stats.lfTentes = stats.tirs.lancers_francs?.tentes || 0;
-                                    player.stats.lfReussis = stats.tirs.lancers_francs?.reussis || 0;
-                                }
-                                player.stats.rebonds = stats.rebonds || 0;
-                                player.stats.passes = stats.passes_decisives || 0;
-                                player.stats.interceptions = stats.interceptions || 0;
-                                player.stats.contres = stats.contres || 0;
-                                player.stats.balPerdus = stats.ballons_perdus || 0;
-                                player.stats.fautes = stats.fautes || 0;
-                            }
+                    // Charger les statistiques si présentes
+                    this.loadPlayerStats(player, joueuseData.statistiques);
 
-                            this.players.push(player);
-                            this.renderPlayer(player);
-                        });
-                    }
-
-                    this.saveToLocalStorage();
-                    this.showAlert('✅ Succès', `Nouveau match chargé avec ${data.joueuses?.length || 0} joueuse(s) !`);
+                    this.players.push(player);
+                    this.renderPlayer(player);
                 });
-            })
-            .catch(error => {
-                console.error('Erreur lors du chargement du fichier:', error);
-                const errorMsg = error.message || 'Erreur inconnue';
-                this.showAlert('❌ Erreur', `Impossible de charger le fichier empty_PRF.json.\n\nDétails: ${errorMsg}\n\nVérifiez que le fichier est bien présent dans le dépôt GitHub.`);
-            });
+            }
+
+            this.saveToLocalStorage();
+            await this.showAlert('✅ Succès', `Nouveau match chargé avec ${data.joueuses?.length || 0} joueuse(s) !`);
+            
+        } catch (error) {
+            console.error('Erreur lors du chargement du fichier:', error);
+            const errorMsg = error.message || 'Erreur inconnue';
+            await this.showAlert('❌ Erreur', `${ERROR_MESSAGES.TEMPLATE_ERROR}\n\nDétails: ${errorMsg}`);
+        }
     }
 
-    cloturerMatch() {
+    /**
+     * Charge les statistiques d'une joueuse depuis un objet de données
+     * @param {Object} player - Objet player à remplir
+     * @param {Object} statsData - Données statistiques à charger
+     */
+    loadPlayerStats(player, statsData) {
+        if (!statsData) return;
+        
+        // Tirs
+        if (statsData.tirs) {
+            player.stats.tirsIntTentes = statsData.tirs.interieurs?.tentes || 0;
+            player.stats.tirsIntReussis = statsData.tirs.interieurs?.reussis || 0;
+            player.stats.tirsExtTentes = statsData.tirs.exterieurs?.tentes || 0;
+            player.stats.tirsExtReussis = statsData.tirs.exterieurs?.reussis || 0;
+            player.stats.tirs3Tentes = statsData.tirs.trois_points?.tentes || 0;
+            player.stats.tirs3Reussis = statsData.tirs.trois_points?.reussis || 0;
+            player.stats.lfTentes = statsData.tirs.lancers_francs?.tentes || 0;
+            player.stats.lfReussis = statsData.tirs.lancers_francs?.reussis || 0;
+        }
+        
+        // Autres stats
+        player.stats.rebonds = statsData.rebonds || 0;
+        player.stats.passes = statsData.passes_decisives || 0;
+        player.stats.interceptions = statsData.interceptions || 0;
+        player.stats.contres = statsData.contres || 0;
+        player.stats.balPerdus = statsData.ballons_perdus || 0;
+        player.stats.fautes = statsData.fautes || 0;
+    }
+
+    /**
+     * Clôture le match: exporte JSON et ouvre la page récapitulative
+     * @returns {Promise<void>}
+     */
+    async cloturerMatch() {
         if (this.players.length === 0) {
-            this.showAlert('⚠️ Aucune donnée', 'Ajoutez au moins une joueuse avant de clôturer le match.');
+            await this.showAlert('⚠️ Aucune donnée', ERROR_MESSAGES.NO_PLAYERS);
             return;
         }
 
@@ -240,12 +391,20 @@ class BasketStatsApp {
         };
 
         // Stocker temporairement dans sessionStorage
-        sessionStorage.setItem('recapMatch', JSON.stringify(recapData));
+        sessionStorage.setItem(SESSION_RECAP_KEY, JSON.stringify(recapData));
 
         // Ouvrir le récapitulatif dans un nouvel onglet
-        window.open('recap.html', '_blank');
+        const recapWindow = window.open(RECAP_PAGE_URL, '_blank');
+        if (!recapWindow) {
+            await this.showAlert('⚠️ Popup bloquée', 'Autorisez les popups pour ouvrir le récapitulatif.');
+        }
     }
 
+    /**
+     * Affiche une carte joueuse dans le DOM
+     * Configure tous les event listeners pour cette carte
+     * @param {Object} player - Objet player à afficher
+     */
     renderPlayer(player) {
         // Cloner le template
         const cardElement = this.template.content.cloneNode(true);
@@ -289,12 +448,12 @@ class BasketStatsApp {
         this.playersContainer.appendChild(card);
     }
 
+    /**
+     * Filtre les joueuses affichées selon le terme de recherche
+     * Recherche insensible aux accents dans le nom et numéro
+     * @param {string} searchTerm - Terme de recherche
+     */
     filterPlayers(searchTerm) {
-        const normalizeText = (str) => {
-            if (!str) return '';
-            return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-        };
-        
         const term = normalizeText(searchTerm.trim());
         const cards = this.playersContainer.querySelectorAll('.player-card');
         
